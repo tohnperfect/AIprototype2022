@@ -8,6 +8,32 @@
     <h1> My First Try Using Flask </h1>
     <p> Flask is Fun </p>
     <h2 style="color:red"> Hello, {{name}}! </h2>
+    <h2 style="color:blueviolet"> {{fav}} </h2>
     <h3> {{2**5}} </h3>
+
+    <form action="{{ url_for('home')}}" method="post">
+
+      <label for="firstname">First Name:</label>
+
+      <input type="text" id="firstname" name="fname" placeholder="first name">
+
+      <label for="lastname">Last Name:</label>
+
+      <input type="text" id="lastname" name="lname" placeholder="last name">
+
+      <button type="submit">Login</button>
+    </form>  
+    <br>
+    <form action="{{ url_for('home2')}}" method="post">
+      <input type="radio" id="html" name="fav_language" value="HTML">
+      <label for="html">HTML</label><br>
+      <input type="radio" id="css" name="fav_language" value="CSS">
+      <label for="css">CSS</label><br>
+      <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+      <label for="javascript">JavaScript</label>
+      <br>
+      <button type="submit">submit</button>
+    </form>
+      
   </body>
 </html>

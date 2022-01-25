@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template 
 import json
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -24,10 +25,31 @@ def request_detail():
     return json_data
 
 ##webapp 
-@app.route("/home")
+@app.route("/home", methods=['POST','GET'])
 def home():
     
-    return render_template("home.html",name = 'Tohn')
+    if request.method == "POST":
+        dbpd = pd.read_csv('db.csv')
+        # getting input with name = fname in HTML form
+        first_name = request.form.get("fname")
+        # getting input with name = lname in HTML form 
+        last_name = request.form.get("lname") 
+        dbpd = dbpd.append({'name': first_name,'lastname' : last_name}, ignore_index=True)
+        dbpd.to_csv('db.csv',index=False)
+        return render_template("home.html",name = f"{first_name} {last_name}", fav ="")
+
+    return render_template("home.html",name = 'Tohn', fav ="")
+
+@app.route("/home2", methods=['POST'])
+def home2():
+
+    # getting input with name = fname in HTML form
+    name = request.form['fav_language']
+    print(name)
+    #return render_template("home.html",name = f"{first_name} {last_name}")
+
+
+    return render_template("home.html",name = 'Tohn', fav = name)
     
 if __name__ == "__main__":
     app.run()#host='0.0.0.0',port=5001
