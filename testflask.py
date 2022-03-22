@@ -38,11 +38,17 @@ def home():
         dbpd.to_csv('db.csv',index=False)
         return render_template("home.html",name = f"{first_name} {last_name}", fav ="")
 
+    if request.method == "GET":
+        getval = request.args
+        print(getval)
+        print(getval.get('name'))
+        
+
     return render_template("home.html",name = 'Tohn', fav ="")
 
 @app.route("/home2", methods=['POST'])
 def home2():
-
+    print('we are in home2')
     # getting input with name = fname in HTML form
     name = request.form['fav_language']
     print(name)
