@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template 
+from flask import Flask, request, render_template, make_response 
 import json
 import pandas as pd
 
@@ -34,9 +34,14 @@ def home():
         first_name = request.form.get("fname")
         # getting input with name = lname in HTML form 
         last_name = request.form.get("lname") 
+
         dbpd = dbpd.append({'name': first_name,'lastname' : last_name}, ignore_index=True)
         dbpd.to_csv('db.csv',index=False)
-        return render_template("home.html",name = f"{first_name} {last_name}", fav ="")
+
+        resp = make_response(render_template("home.html",name = f"{first_name} {last_name}", fav =""))
+        resp.set_cookie('firstname', first_name)
+        
+        return resp
 
     if request.method == "GET":
         getval = request.args
